@@ -62,4 +62,3 @@ def AI_1(ai_hp, player_hp):
 
 
 player_1_turn(ai_hp, player_hp)
-#hi
