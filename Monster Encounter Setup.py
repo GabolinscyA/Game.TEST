@@ -1,7 +1,7 @@
 import random
-ai_hp = 0
+ai_group_hp = 0
 ai_power = 0
-def monster_spawner(ai_hp, ai_power):
+def monster_spawner(ai_group_hp, ai_power):
     num_spawned_monsters = [1,1,1,1,1,2,2,2,2,3,3,3,4,4,5]
     random.shuffle(num_spawned_monsters)
     if num_spawned_monsters[0] == 1:
@@ -13,34 +13,45 @@ def monster_spawner(ai_hp, ai_power):
     elif num_spawned_monsters[0] == 4:
         ai_type = ["troggies"]#will create variety later
     elif num_spawned_monsters[0] == 5:
-        ai_hp = 300
-        ai_power = 5
-        ai_spawned = 5
         ai_type = ["bug swarm"]#will create variety later
 
     random.shuffle(ai_type)
     monster_ai = ai_type[0]
     if monster_ai == "boss":
         attacks = ["Hammer slam"]#will add more later
-        ai_hp = 1500
+        ai_group_hp = 1500
         ai_power = 80
         ai_spawned = 1
+        enter_word = "a"
+        nickname = "Boss"
     elif monster_ai == "brothers":
         attacks = ["Beat Down"]#will add more later
-        ai_hp = 750
+        ai_group_hp = 750
         ai_power = 40
         ai_spawned = 2
+        enter_word = "2"
+        nickname = "Brother"
     elif monster_ai == "triplets":
         attacks = ["Starlight beam"]#will add more later
-        ai_hp = 500
+        ai_group_hp = 500
         ai_power = 25
         ai_spawned = 3
+        enter_word = "the"
+        nickname = "Triplet"
     elif monster_ai == "troggies":
         attacks = ["Slash"]#will add more later
-        ai_hp = 375
+        ai_group_hp = 375
         ai_power = 10
         ai_spawned = 4
-
+        enter_word = "some"
+        nickname = "Troggie"
+    elif monster_ai == "bug swarm":
+        attacks = ["Scratch"]
+        ai_group_hp = 300
+        ai_power = 5
+        ai_spawned = 5
+        enter_word = "a"
+        nickname = "Bug"
 
 def chose_attack_ai(attacks,monster_ai,ai_power,damage_done_ai):
     damage_done_ai = 0
@@ -84,3 +95,78 @@ def chose_attack_ai(attacks,monster_ai,ai_power,damage_done_ai):
                 damage_done_ai = Slash[0]*2
             else:
                 damage_done_ai = Slash[0]
+    if monster_ai == "bug swarm":
+        Scratch = [1*ai_power,1.1*ai_power,1.2*ai_power,1.3*ai_power,1.4*ai_power,1.5*ai_power]
+        random.shuffle(attacks)
+        if attacks[0] == "Scratch":
+            random.shuffle(Scratch)
+            crit_chance = random.randint(1,2,3,4,5,6,7,8,9,0)
+            if crit_chance == 9 or 0:
+                damage_done_ai = Scratch[0]*2
+            else:
+                damage_done_ai = Strach[0]
+
+def monster_encounter(monster_ai,ai_spawned,enter_word,ai_group_hp):
+    print("You encountered {} {}!".format(enter_word, monster_ai))
+    if ai_spawned == 1:
+        ai_1_hp = ai_group_hp
+        ai_list = [ai_1_hp]
+    elif ai_spawned == 2:
+        ai_1_hp = ai_group_hp
+        ai_2_hp = ai_group_hp
+        ai_list = [ai_1_hp,ai_2_hp]
+    elif ai_spawned == 3:
+        ai_1_hp = ai_group_hp
+        ai_2_hp = ai_group_hp
+        ai_3_hp = ai_group_hp
+        ai_list = [ai_1_hp,ai_2_hp,ai_3_hp]
+    elif ai_spawned == 4:
+        ai_1_hp = ai_group_hp
+        ai_2_hp = ai_group_hp
+        ai_3_hp = ai_group_hp
+        ai_4_hp = ai_group_hp
+        ai_list = [ai_1_hp,ai_2_hp,ai_3_hp,ai_4_hp]
+    elif ai_spawned == 5:
+        ai_1_hp = ai_group_hp
+        ai_2_hp = ai_group_hp
+        ai_3_hp = ai_group_hp
+        ai_4_hp = ai_group_hp
+        ai_5_hp = ai_group_hp
+        ai_list = [ai_1_hp,ai_2_hp,ai_3_hp,ai_4_hp,ai_5_hp]
+
+player_hp = 500
+def player_1_turn(ai_group_hp, player_hp):
+    if player_hp > 0:
+        print("Player HP:{}".format(player_hp))
+        fireball = [30, 31, 32, 33, 34, 35]
+        player_1_turn_choice = input("What do you want to do:'Attack','End'")
+        player_1_turn_choice = player_1_turn_choice.strip().lower()
+        if player_1_turn_choice == "attack":
+            if ai_spawned > 1:
+                player_1_attack_choice = input("Which enemy would you like to interact with:{}".format(monster_ai))
+            else:
+                player_1_attack_choice = input("Which numbered enemy would you like to interact with:{}".format(nickname and len(ai_list)))
+        elif player_1_turn_choice == "end":
+            print("You passed your turn")
+            damage_done_player = 0
+            #pass to next turn
+        player_1_attack_choice = player_1_attack_choice.strip().lower()
+        player_1 = input("What attack would you like to preform:'fireball'")
+        player_1.strip().lower()
+        if player_1 == "fireball":
+            random.shuffle(fireball)
+            crit_chance = random.randint(1, 2)
+            if crit_chance == 2:
+                damage_done_player = 0
+                damage_done_player = fireball[0] * 2
+                print("You're fireball did critical damage and did {}!".format(damage_done_player))
+            else:
+                damage_done_player = 0
+                damage_done_player = fireball[0]
+                print("You're fireball hit for {}!".format(damage_done_player))
+            if player_1_attack_choice ==
+        else:
+            print("Please enter a correct input")
+            player_1_turn(ai_group_hp, player_hp)
+    else:
+        print("Lose message")
