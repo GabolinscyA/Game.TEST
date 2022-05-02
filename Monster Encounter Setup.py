@@ -16,7 +16,9 @@ elif num_spawned_monsters[0] == 5:
     ai_type = ["bug swarm"]  # will create variety later
 random.shuffle(ai_type)
 monster_ai = ai_type[0]
+#Setting required variables depending on what enemy type is selected for the encounter
 if monster_ai == "boss":
+    #attack and ability list to be read by the chosen_attack_ai function
     attacks = ["Hammer slam"]  # will add more later
     ai_group_hp = 1500
     ai_power = 80
@@ -53,7 +55,8 @@ elif monster_ai == "bug swarm":
     nickname = "Bug"
 
 print("You encountered {} {}!".format(enter_word, monster_ai))
-nul = 0
+#nul variable set to be read by the encounter section to determine how many of what enemy to make selectable to attack and interact with
+nul = 1337.1337
 if ai_spawned == 1:
     ai_1_hp = ai_group_hp
     ai_2_hp = nul
@@ -92,77 +95,90 @@ elif ai_spawned == 5:
 else:
     print("something went wrong :(")
 
-
 def chose_attack_ai(attacks, ai_power, monster_ai):
+    global damage_done_ai
     damage_done_ai = 0
+    #This layer of 'if' statements selects which path of calculations will be taken dependant on what enemy is active
     if monster_ai == "boss":
+        #Setting the different attack/ability values for the specific enemy
         Hammer_slam = [2 * ai_power, 2.1 * ai_power, 2.2 * ai_power, 2.3 * ai_power, 2.4 * ai_power, 2.5 * ai_power]
+        #Randomly selecting which attack/ability to use
         random.shuffle(attacks)
-        print("boss mode entered")
-        if attacks[0] == "Hammer slam":
+        #Branching off into the different attacks variables
+        if attacks[0] == 'Hammer slam':
             random.shuffle(Hammer_slam)
             crit_chance = random.randint(0, 9)
-            if crit_chance == 8 or 9:
+            if crit_chance == 9:
                 damage_done_ai = Hammer_slam[0] * 2
-                return damage_done_ai
+                print("crit")
+            elif crit_chance == 8:
+                damage_done_ai = Hammer_slam[0] * 2
+                print("crit")
             else:
                 damage_done_ai = Hammer_slam[0]
-                return damage_done_ai
+                print("no crit")
     elif monster_ai == "brothers":
         Beat_down = [1 * ai_power, 1.1 * ai_power, 1.2 * ai_power, 1.3 * ai_power, 1.4 * ai_power, 1.5 * ai_power]
         random.shuffle(attacks)
-        print("brothers mode entered")
         if attacks[0] == "Beat Down":
             random.shuffle(Beat_down)
             crit_chance = random.randint(0, 9)
-            if crit_chance == 8 or 9:
+            if crit_chance == 9:
                 damage_done_ai = Beat_down[0] * 2
-                return damage_done_ai
+                print("crit")
+            elif crit_chance == 8:
+                damage_done_ai = Beat_down[0] * 2
+                print("crit")
             else:
                 damage_done_ai = Beat_down[0]
-                return damage_done_ai
+                print("no crit")
     elif monster_ai == "triplets":
         Starlight_beam = [1.5 * ai_power, 1.6 * ai_power, 1.7 * ai_power, 1.8 * ai_power, 1.9 * ai_power, 2 * ai_power]
         random.shuffle(attacks)
-        print("triplets mode entered")
         if attacks[0] == "Starlight beam":
             random.shuffle(Starlight_beam)
             crit_chance = random.randint(0, 9)
-            if crit_chance == 8 or 9:
+            if crit_chance == 9:
                 damage_done_ai = Starlight_beam[0] * 2
-                return damage_done_ai
+                print("crit")
+            elif crit_chance == 8:
+                damage_done_ai = Starlight_beam[0] * 2
+                print("crit")
             else:
                 damage_done_ai = Starlight_beam[0]
-                return damage_done_ai
+                print("no crit")
     elif monster_ai == "troggies":
         Slash = [1.5 * ai_power, 1.6 * ai_power, 1.7 * ai_power, 1.8 * ai_power, 1.9 * ai_power, 2 * ai_power]
         random.shuffle(attacks)
-        print("troggies mode entered")
         if attacks[0] == "Slash":
             random.shuffle(Slash)
             crit_chance = random.randint(0, 9)
-            if crit_chance == 8 or 9:
+            if crit_chance == 9:
                 damage_done_ai = Slash[0] * 2
-                return damage_done_ai
+                print("crit")
+            elif crit_chance == 8:
+                damage_done_ai = Slash[0] * 2
+                print("crit")
             else:
                 damage_done_ai = Slash[0]
-                return damage_done_ai
+                print("no crit")
     elif monster_ai == "bug swarm":
         Scratch = [1 * ai_power, 1.1 * ai_power, 1.2 * ai_power, 1.3 * ai_power, 1.4 * ai_power, 1.5 * ai_power]
         random.shuffle(attacks)
-        print("bug mode entered")
         if attacks[0] == "Scratch":
             random.shuffle(Scratch)
             crit_chance = random.randint(0, 9)
-            if crit_chance == 8 or 9:
+            if crit_chance == 9:
                 damage_done_ai = Scratch[0] * 2
-                return damage_done_ai
+                print("crit")
+            elif crit_chance == 8:
+                damage_done_ai = Scratch[0] * 2
+                print("crit")
             else:
                 damage_done_ai = Scratch[0]
-                return damage_done_ai
+                print("no crit")
     else:
         print("something went wrong :(")
-    print(damage_done_ai)
-
 
 chose_attack_ai(attacks, ai_power, monster_ai)
+print(damage_done_ai)
