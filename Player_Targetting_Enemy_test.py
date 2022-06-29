@@ -124,13 +124,26 @@ def player_choice_menu():
 
 
 def attack_list():
+    global damage_done_player
+    fireball = [30, 31, 32, 33, 34, 35]
     print("-----------------")
     print("List of attacks:")
     print("Fireball")
     attack_choice = input("Type which attack you'd like to use (e.g 'Fireball')")
     attack_choice = attack_choice.strip().lower()
     if attack_choice == "fireball":
-        player_2enemy_target(ai_1_hp, ai_2_hp, ai_3_hp, ai_4_hp, ai_5_hp)
+        random.shuffle(fireball)
+        crit_chance = random.randint(1, 2)
+        if crit_chance == 2:
+            damage_done_player = 0
+            damage_done_player = fireball[0] * 2
+            print("You're fireball did critical damage and did {}!".format(damage_done_player))
+            player_2enemy_target(ai_1_hp, ai_2_hp, ai_3_hp, ai_4_hp, ai_5_hp)
+        else:
+            damage_done_player = 0
+            damage_done_player = fireball[0]
+            print("You're fireball hit for {}!".format(damage_done_player))
+            player_2enemy_target(ai_1_hp, ai_2_hp, ai_3_hp, ai_4_hp, ai_5_hp)
     else:
         print("Please type a valid input")
         attack_list()
@@ -192,51 +205,62 @@ def player_2enemy_target(ai_1_hp, ai_2_hp, ai_3_hp, ai_4_hp, ai_5_hp):
             attackable_ai_5 = 0
     elif ai_5_hp == "nul":
         attackable_ai_5 = 0
-    player_attack_choice_check()
+    player_attack_choice_check(ai_1_hp, ai_2_hp, ai_3_hp, ai_4_hp, ai_5_hp)
 
 
-def player_attack_choice_check():
+def player_attack_choice_check(ai_1_hp, ai_2_hp, ai_3_hp, ai_4_hp, ai_5_hp):
     global attacked_target
     if ai_spawned == 1:
         player_attack_choice = input("Please type which enemy you'd like to attack (e.g '{}')".format(nickname))
     else:
         player_attack_choice = input("Please type which enemy you'd like to attack (e.g '{} 2')".format(nickname))
+    player_attack_choice = player_attack_choice.strip().lower()
     if ai_spawned == 1:
         if player_attack_choice == nickname and attackable_ai_1 == 1:
             print("target worked")
+            ai_1_hp = ai_1_hp - damage_done_player
+            attack_list()
         else:
             print("something when horribly wrong")
     elif ai_spawned != 1:
         if player_attack_choice == nickname + " 1" and attackable_ai_1 == 1:
             print("target worked")
-            attacked_target = 1
+            ai_1_hp = ai_1_hp - damage_done_player
+            attack_list()
         elif player_attack_choice == nickname + " 1" and attackable_ai_1 == 0:
             print("This monster is dead. Please select a valid target")
-            player_attack_choice_check()
+            player_attack_choice_check(ai_1_hp, ai_2_hp, ai_3_hp, ai_4_hp, ai_5_hp)
         if player_attack_choice == nickname + " 2" and attackable_ai_2 == 1:
             print("target worked")
-            attacked_target = 2
+            ai_2_hp = ai_2_hp - damage_done_player
+            attack_list()
         elif player_attack_choice == nickname + " 2" and attackable_ai_2 == 0:
             print("This monster is dead. Please select a valid target")
-            player_attack_choice_check()
+            player_attack_choice_check(ai_1_hp, ai_2_hp, ai_3_hp, ai_4_hp, ai_5_hp)
         if player_attack_choice == nickname + " 3" and attackable_ai_3 == 1:
             print("target worked")
-            attacked_target = 3
+            ai_3_hp = ai_3_hp - damage_done_player
+            attack_list()
         elif player_attack_choice == nickname + " 3" and attackable_ai_3 == 0:
             print("This monster is dead. Please select a valid target")
-            player_attack_choice_check()
+            player_attack_choice_check(ai_1_hp, ai_2_hp, ai_3_hp, ai_4_hp, ai_5_hp)
         if player_attack_choice == nickname + " 4" and attackable_ai_4 == 1:
             print("target worked")
-            attacked_target = 4
+            ai_4_hp = ai_4_hp - damage_done_player
+            attack_list()
         elif player_attack_choice == nickname + " 4" and attackable_ai_4 == 0:
             print("This monster is dead. Please select a valid target")
-            player_attack_choice_check()
+            player_attack_choice_check(ai_1_hp, ai_2_hp, ai_3_hp, ai_4_hp, ai_5_hp)
         if player_attack_choice == nickname + " 5" and attackable_ai_5 == 1:
             print("target worked")
-            attacked_target = 5
+            ai_5_hp = ai_5_hp - damage_done_player
+            attack_list()
         elif player_attack_choice == nickname + " 5" and attackable_ai_5 == 0:
             print("This monster is dead. Please select a valid target")
-            player_attack_choice_check()
+            player_attack_choice_check(ai_1_hp, ai_2_hp, ai_3_hp, ai_4_hp, ai_5_hp)
+    else:
+        print("That is not a valid target")
+        player_attack_choice_check(ai_1_hp, ai_2_hp, ai_3_hp, ai_4_hp, ai_5_hp)
 
 
 player_choice_menu()
